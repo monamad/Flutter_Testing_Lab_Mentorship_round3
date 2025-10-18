@@ -44,12 +44,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
           children: [
             ElevatedButton(
               onPressed: () =>
-                  _addItem('1', 'Apple iPhone', 999.99, discount: 0.1),
+                  _addItem('1', 'Apple iPhone', 999.99, discount: 0.5),
               child: const Text('Add iPhone'),
             ),
             ElevatedButton(
               onPressed: () =>
-                  _addItem('2', 'Samsung Galaxy', 899.99, discount: 0.15),
+                  _addItem('2', 'Samsung Galaxy', 899.99, discount: 1),
               child: const Text('Add Galaxy'),
             ),
             ElevatedButton(
@@ -113,7 +113,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 itemCount: _controller.items.length,
                 itemBuilder: (context, index) {
                   final item = _controller.items[index];
-                  final itemTotal = item.itemTotal;
+                  final itemTotal = item.itemTotal * item.discount;
 
                   return Card(
                     child: ListTile(

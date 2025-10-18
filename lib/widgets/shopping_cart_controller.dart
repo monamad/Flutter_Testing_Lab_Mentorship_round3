@@ -24,11 +24,11 @@ class ShoppingCartController {
 
   void addItem(String id, String name, double price, {double discount = 0.0}) {
     final existingIndex = _items.indexWhere((item) => item.id == id);
-    print(existingIndex);
 
     if (existingIndex != -1) {
-      // If item exists, increase quantity
-      _items[existingIndex].quantity++;
+      if (_items[existingIndex].quantity < 30) {
+        _items[existingIndex].quantity++;
+      }
     } else {
       // Add new item
       _items.add(
@@ -46,6 +46,8 @@ class ShoppingCartController {
     if (index != -1) {
       if (newQuantity <= 0) {
         _items.removeAt(index);
+      } else if (newQuantity > 30) {
+        return;
       } else {
         _items[index].quantity = newQuantity;
       }
@@ -61,7 +63,10 @@ class ShoppingCartController {
   }
 
   double get totalDiscount {
-    return _items.fold(0.0, (sum, item) => sum + item.itemDiscount);
+    return _items.fold(
+      0.0,
+      (sum, item) => sum + item.itemDiscount * item.price,
+    );
   }
 
   double get totalAmount {
