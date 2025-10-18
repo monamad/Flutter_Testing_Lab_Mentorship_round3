@@ -32,9 +32,8 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
       return null;
     }
 
-    
     if (DateTime.now().millisecond % 4 == 0) {
-      return {'city': city, 'temperature': 22.5}; 
+      return {'city': city, 'temperature': 22.5};
     }
 
     return {
@@ -57,10 +56,9 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
       });
     }
 
-    
     final data = await _fetchWeatherData(_selectedCity);
     setState(() {
-      _weatherData = WeatherData.fromJson(data); 
+      _weatherData = WeatherData.fromJson(data);
       _isLoading = false;
     });
   }
@@ -129,7 +127,6 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
 
           if (_isLoading && _error == null)
             const Center(child: CircularProgressIndicator())
-          
           else if (_weatherData != null)
             Card(
               elevation: 4,
@@ -199,8 +196,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                   ],
                 ),
               ),
-            )
-          
+            ),
         ],
       ),
     );
@@ -238,15 +234,14 @@ class WeatherData {
     required this.icon,
   });
 
-  
   factory WeatherData.fromJson(Map<String, dynamic>? json) {
     return WeatherData(
       city: json!['city'],
       temperatureCelsius: json['temperature'].toDouble(),
       description: json['description'],
-      humidity: json['humidity'], 
-      windSpeed: json['windSpeed'].toDouble(), 
-      icon: json['icon'], 
+      humidity: json['humidity'],
+      windSpeed: json['windSpeed'].toDouble(),
+      icon: json['icon'],
     );
   }
 }
