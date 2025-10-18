@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_testing_lab/widgets/user_registration_widgets_controller.dart';
 
 class UserRegistrationForm extends StatefulWidget {
   const UserRegistrationForm({super.key});
@@ -16,29 +17,6 @@ class _UserRegistrationFormState extends State<UserRegistrationForm> {
 
   bool _isLoading = false;
   String _message = '';
-
-  bool isValidEmail(String email) {
-    return email.contains('@');
-  }
-
-  bool isValidPassword(String password) {
-    return true;
-  }
-
-  Future<void> _submitForm() async {
-    setState(() {
-      _isLoading = true;
-      _message = '';
-    });
-
-    // Simulate API call
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() {
-      _isLoading = false;
-      _message = 'Registration successful!';
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +55,7 @@ class _UserRegistrationFormState extends State<UserRegistrationForm> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your email';
                 }
-                if (!isValidEmail(value)) {
+                if (!UserRegistrationWidgetsController.isValidEmail(value)) {
                   return 'Please enter a valid email';
                 }
                 return null;
@@ -96,7 +74,7 @@ class _UserRegistrationFormState extends State<UserRegistrationForm> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a password';
                 }
-                if (!isValidPassword(value)) {
+                if (!UserRegistrationWidgetsController.isValidPassword(value)) {
                   return 'Password is too weak';
                 }
                 return null;
@@ -122,7 +100,10 @@ class _UserRegistrationFormState extends State<UserRegistrationForm> {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: _isLoading ? null : _submitForm,
+              onPressed: _isLoading
+                  ? null
+                  : () =>
+                        UserRegistrationWidgetsController.submitForm(_formKey),
               child: _isLoading
                   ? const CircularProgressIndicator()
                   : const Text('Register'),
